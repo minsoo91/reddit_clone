@@ -1,0 +1,23 @@
+<div>
+<% @posts.each do |post| %>
+	<div class="col-md-8 col-md-offset-2" style="border-style: dotted; margin-top: 10px">
+	 	<% u = User.find(post.author_id) %>
+	 	<% t = Time.now - post.created_at.localtime %>
+	 	<%= link_to post.title, post.url %>
+	 	Submitted <%= time_ago_in_words(Time.now - t.seconds) %> ago by <%= link_to u.username, profiles_url(u) %>
+	 	to 
+	 	<% post.subs.each do |sub| %>
+	 		<%= link_to sub.title, sub_url(sub) %>
+	 	<% end %>
+	 	<div>
+	 		<!-- Add appropriate links -->
+	 		<% num_comments = post.comments.count %>
+	 		<%= link_to "#{num_comments} Comments", post_url(post) %>
+	 		<%= link_to "Share", user_url %>
+	 		<%= link_to "Save", user_url %>
+	 		<%= link_to "Hide", user_url %>
+	 		<%= link_to "Report", user_url %>
+	 	</div>
+ 	</div>
+ <% end %>
+ </div>

@@ -1,12 +1,16 @@
 <% @post.comments.each do |comment| %>
   <div style='border: 2px dotted green;'>
-    <p>Jerk with an opinion: <%= comment.author.username %></p>
-  
+    <% u = User.find(comment.author_id) %>
+    <%= link_to u.username, profiles_url(u) %>
+    <% t = Time.now - comment.created_at.localtime %>
+  	<%= time_ago_in_words(Time.now - t.seconds) %> ago
     <p><%= comment.content %></p>
     
-    <% if current_user.id == comment.author.id || 
-          current_user.id == @post.sub.moderator %>
+    <% if current_user.id == comment.author.id %>
+    	<%= link_to "edit", edit_comment_url(comment) %>
+        <%= link_to "delete", comment_url(comment), method: :delete %>
     <% end %>
+    <%= link_to "reply", comment_url(comment) %>
   </div>
 <% end %>
 

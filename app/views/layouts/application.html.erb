@@ -7,21 +7,21 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="container-fluid">
+    <% if current_user %>
+      <%= button_to "logout", session_url, method: :delete %>
+    <% end %>
 
-<% if current_user %>
-  <%= button_to "logout", session_url, method: :delete %>
-<% end %>
+      
+    <% if flash[:notice] %>  
+      <ul>
+      <% flash[:notice].each do |notice| %>
+        <li><%= notice %></li>
+      <% end %>
+      </ul>
+    <% end %>
 
-  
-<% if flash[:notice] %>  
-  <ul>
-  <% flash[:notice].each do |notice| %>
-    <li><%= notice %></li>
-  <% end %>
-  </ul>
-<% end %>
-
-<%= yield %>
-
+    <%= yield %>
+  </div>
 </body>
 </html>

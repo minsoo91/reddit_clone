@@ -46,3 +46,5 @@ group :development do
   gem 'quiet_assets'
   gem 'annotate'
 end
+
+gem 'bootstrap-sass'

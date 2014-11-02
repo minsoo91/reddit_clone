@@ -19,12 +19,17 @@
     id="post_url"
     value="">
   <br>
-  <% @subs.each do |sub| %>
-    <input type="checkbox" 
-           name="post[subs][]" 
-           id="post_sub_<%=sub.title%>" 
-           value = "<%=sub.id %>">
-           <label for="post_sub_<%=sub.title%>"><%=sub.title%></label>
+<input type="hidden" name="post[sub_ids][]" value="">
+  <% Sub.all.each do |sub| %>
+    <label>
+      <input
+        type="checkbox"
+        name="post[sub_ids][]"
+        value="<%= sub.id %>"
+      >
+      <%= sub.title %>
+    </label>
+    <br>
   <% end %>
   <br>
   <label for="post_content">Content</label>

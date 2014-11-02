@@ -1,5 +1,10 @@
 class PostsController < ApplicationController
-  
+  before_action :require_login
+
+  def index
+    @posts = Post.all
+    render :index
+  end
   def show
     @post = Post.find(params[:id])
     render :show
@@ -13,16 +18,14 @@ class PostsController < ApplicationController
   
   def new
     @post = Post.new
-    # render :new
+    render :new
   end
   
   def create
     @post = Post.new(post_params)    
     @post.author_id = current_user.id
-    
     if @post.save
-      Postsub.add_subs_from_new_posts(params[:post][:subs], @post.id)
-      redirect_to(:back)
+      redirect_to posts_url
     else
       flash.now[:notice] = @post.errors.full_messages
       render :new
@@ -52,6 +55,6 @@ class PostsController < ApplicationController
   
   private
     def post_params
-      params.require(:post).permit(:title, :content, :url)
+      params.require(:post).permit(:title, :content, :url, sub_ids:[])
     end
 end

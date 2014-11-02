@@ -8,18 +8,8 @@ class Post < ActiveRecord::Base
     primary_key: :id
   )
   
-  has_many(
-    :postsubs,
-    class_name: "Postsub",
-    foreign_key: :sub_id,
-    primary_key: :id
-  )
-  
-  has_many(
-    :subs,
-    through: :postsubs,
-    source: :sub
-  )
+  has_many :postsubs, inverse_of: :post, dependent: :destroy
+  has_many :subs, through: :postsubs, source: :sub
   
   has_many(
     :comments,

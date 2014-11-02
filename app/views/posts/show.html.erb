@@ -4,12 +4,14 @@
     <%= @post.title %>
   <% end %>
 
-  <p>Post Author: <%= @post.author.username %></p>
+  <% u = User.find(@post.author_id) %>
+    <% t = Time.now - @post.created_at.localtime %>
+    <%= link_to @post.title, @post.url %>
+    submitted <%= time_ago_in_words(Time.now - t.seconds) %> ago by <%= link_to u.username, profiles_url(u) %>
 
   <p><%= @post.content %></p>
   
-  <% if current_user.id == @post.author.id || 
-        current_user.id == @post.sub.moderator %>
+  <% if current_user.id == @post.author.id %>
         <%= link_to "Edit Post", edit_post_url(@post) %>
         <%= link_to "Delete Post", post_url(@post), method: :delete %>
   <% end %>
